@@ -1,0 +1,33 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title><%=title%></title>
+        <link rel="stylesheet" type="text/css" href="../styles/problems.css">
+    </head>
+    <body>
+        <div class='outer'>
+            <h1><%=heading%></h1>
+            <div class='problem'>
+                <h3>The Challenge:</h3>
+                <p><%=description%></p>
+                <p><%=comment%></p>
+            </div>
+            <% solutions.forEach(function(answer, ind) { %>
+                    <h3><%=answer.heading%></h3>
+                    <div class='intro'>
+                        <p><%=answer.discuss%></p>
+                    </div>
+                    <button id=<%=ind.toString()%> onclick="showIt()">Show Answer</button>
+                    <br/>
+                    <pre id=<%="pre"+ind.toString()%> class='code dark'>
+                        <%=answer.code%>
+                    </pre>
+                    <%answer.notes.forEach(function(note, ind) { %>
+                        <div class='notes'>
+                            <span class='bold'>Note <%=(ind+1).toString()%>:</span>
+                            <p><%- note%></p>
+                        </div>
+                    <%})%>
+            <%})%>
+        </div>
+        <%include partials/footer%>

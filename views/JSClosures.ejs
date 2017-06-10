@@ -1,0 +1,405 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>Closure</title>
+
+</head>
+<body>
+<h3>Closure</h3>
+
+<ol>
+<li><p>This is a topic on which I have noted quite a bit of confusion.  Even at the most basic level, I have heard closure defined in many different ways, even as several different parts of speech (i.e., as a noun, a verb, an adjective).  I believe that much of the confusion stems from a misplaced apprehension that closure is a difficult and mysterious process that can be understood only with a mighty effort.  The good news is that it is not so difficult to understand, although it can produce results that are counterintuitive until one has gotten a good handle on it.</p></li>
+<li><p>To illustrate the operation of closure in Javascript, I will set out a simple coding exercise.  The goal of our code will be to get a countdown along these lines:</p>
+
+<pre><code>5 and counting!
+4 and counting!
+3 and counting!
+2 and counting!
+1 and counting!
+Bazoom!
+</code></pre></li>
+<li><p>Obviously, anyone who has gotten past his or her first lesson or two in Javascript will think of using a for-loop to get this output, perhaps as follows:</p>
+
+<pre><code> for (var i = 0; i &lt; 5; i++) {
+     var counter = 5;
+     console.log (counter + " and counting!");
+     counter--;
+ }
+ console.log("Bazoom!");
+</code></pre></li>
+<li><p>Which, of course, leads to the following result:</p>
+
+<pre><code> 5 and counting!
+ 5 and counting!
+ 5 and counting!
+ 5 and counting!
+ 5 and counting!
+ Bazoom!
+</code></pre>
+
+<p> because the counter variable is inside our for-loop.  Placing it outside the for-loop will allow the counter to avoid being reset to 5 each time the loop runs, so code that works might look something like:</p>
+
+<pre><code> var counter = 5; 
+ for (var i = 0; i &lt; 5; i++) {
+     console.log (counter + " and counting!");
+     counter--;
+ }
+ console.log("Bazoom!");
+</code></pre>
+
+<p> producing the following output:</p>
+
+<pre><code> 5 and counting!
+ 4 and counting!
+ 3 and counting!
+ 2 and counting!
+ 1 and counting!
+ Bazoom!
+</code></pre></li>
+<li><p>Okay, that is a solution.  However, taking a more sophisticated approach to the problem, we can remove the repeated functionality and compartmentalize it in a function (of course, in such a simple example, one might decide "why bother", but this is something we will want to do in a more typical case).  Doing so, we might end up with:</p>
+
+<pre><code>var counter = 5;
+function countDown() {
+    console.log(counter + " and counting!");
+    counter--;  
+}
+
+for (var i = 0; i &lt; 5; i++) {
+    countDown();
+}
+console.log("Bazoom!");
+</code></pre></li>
+<li><p>In the above example, the counter variable must be declared and set outside the countDown() function, or else it would get reset each time, just as in the simple looping example with which we began.  That gives rise to a problem
+of scope - if this is part of a large program, with several programmers working on its various components over a period of years, then there is a pretty good chance that somebody else may try using the name "counter" for his own variable, in which case there would be a conflict between these multiple uses of a global variable.</p></li>
+<li><p>This problem is solved by a <strong>closure</strong>.  A <strong>closure</strong> is simply a function, together with the variables that are in its environment.  So, consider the following, which gets the counter variable out of the global scope and into that of the wrapper() function (you may also note that we change the countDown() function to return a value, rather than log it to the console, but that is beside the point):</p>
+
+<pre><code>function wrapper() {
+    var counter = 5;
+    function countDown() {
+        result = counter + " and counting!");
+        counter--;
+        return (res);
+    }
+    return countDown;
+}
+for (var i = 0; i &lt; 5; i++) {
+    console.log(wrapper());
+}
+console.log("Bazoom");
+</code></pre></li>
+<li><p>Now, this does not work, either.  What logs to the console is:</p>
+
+<pre><code> [Function: countDown]
+ [Function: countDown]
+ [Function: countDown]
+ [Function: countDown]
+ [Function: countDown]
+ Bazoom!
+</code></pre></li>
+<li><p>So, as we should expect if we look at the return of the wrapper() function, we are getting five instances of the actual countDown function itself - not implementations of the function; rather, wrapper() is simply passing the function itself to the console.  This should be a familiar concept: that in Javascript functions are first-class objects, and therefore can be passed around just like integers or arrays, etc.  In contrast, if the return value of the wrapper() function were <em>countDown()</em>, then countDown() would be evaluated each time wrapper() was called in the for loop, which would leave us with a counter that resets to 5 each time around).</p></li>
+</ol>
+
+
+<h4>Okay, Here is the Important Stuff!!!</h4>
+
+<ol>
+<li><p>Let's assume that in the above example we then assign the value of the wrapper() function to a variable "x".  In other words :</p>
+
+<pre><code>var x = wrapper();
+</code></pre></li>
+<li><p>We know that the return value of wrapper() is countDown.  Let's examine a few possible calls:</p>
+
+<pre><code>console.log(countDown());
+</code></pre>
+
+<p>The above would simply generate a "Reference Error", because countDown, being inside the wrapper() function, is not within our current scope.  Instead, we might try:</p>
+
+<pre><code>console.log(wrapper()());  // results in "5 and counting"
+</code></pre>
+
+<p>This seems like progress.  So, what if we now construct our program as follows:</p>
+
+<pre><code>function wrapper() {
+    var counter = 5;
+    function countDown() {
+        result = counter + " and counting!");
+        counter--;
+        return (result);
+    }
+    return countDown
+}
+for (var i = 0; i &lt; 5; i++) {
+    console.log(wrapper()());
+}
+console.log("Bazoom");
+</code></pre>
+
+<p>What we end up with is:</p>
+
+<pre><code>5 and counting!
+5 and counting!
+5 and counting!
+5 and counting!
+5 and counting!
+Bazoom!
+</code></pre>
+
+<p>This should not be a shock.  Each time it is called in the for-loop, wrapper() returns countDown which, being followed by parentheses, gets evaluated anew, resulting in a fresh setting of counter to 5.</p></li>
+</ol>
+
+
+<h3>Hang On, Here is the Magic Sleight-of-Hand</h3>
+
+<ol>
+<li><p>Following this, we might expect a similar result from the following, being the exact copy of the code above, except that we assign, to a variable x, the value "wrapper()".  So every time the for loop runs, we run <em>console.log(x())</em>; instead of <em>console.log(wrapper()())</em>;</p>
+
+<pre><code>function wrapper() {
+    var counter = 5;
+    function countDown() {
+        result = counter + " and counting!");
+        counter--;
+        return (result);
+    }
+    return countDown
+}
+
+var x = wrapper();
+
+for (var i = 0; i &lt; 5; i++) {
+    console.log(x());
+}
+console.log("Bazoom");
+</code></pre>
+
+<p>However, the resulting output to the console differs:</p>
+
+<pre><code>5 and counting!
+4 and counting!
+3 and counting!
+2 and counting!
+1 and counting!
+Bazoom!
+</code></pre>
+
+<p>Bazoom! for sure!!! - this is the output we are looking for, but why did it happen, when the counter got reset each loop in the previous example?  <strong>The answer lies in the fact that, behind the scenes, when a function is assigned, it is accompanied by the values of the variables in its scope, as they exist <em>at the time the function is assigned</em></strong>.  So, in the first example, "wrapper()" kept evaluating to countDown, and getting a nice, fresh set of scope variables (including counter as 5) each time.  In the latter example, x was assigned the function countDown, together with the accompanying variables, but did not receive new sets by assignment again.  After being assigned the value of countDown, when x() was called, it was evaluated, counter was decremented, and then next time x() was called, counter was decremented again, and so forth.</p></li>
+</ol>
+
+
+<h4>Detour</h4>
+
+<ol>
+<li>This is not necessary to consider immediately, while getting the other points set in your mind, but reflect upon what happens when we make an assignment, "x = y".  There are two possible interpretations, when we remember that a variable is a piece of memory somewhere in the computer, in which a value is held.  Think of the memory as a sheet of paper onto which a number is written.
+
+<ol type="a">
+<li>If I have the paper, with a 5 written on it, and you wanted access to the information, I could copy the sheet and give you your own copy.  If I erased my 5 and wrote a 6 on it, yours would still say 5, and vice versa.</li>
+<li> Alternatively, I could give you a key to a safe deposit box where I keep the paper.  You can go see it anytime, and if either you or I scratches out the 5 and writes a 6, then both of us will now have a 6 in our paper memory.</li>
+</ol>
+
+
+<p> Depending on the situation, either thing could happen in Javascript.  Compare the following two snippets:</p>
+
+<pre><code> var y = "tail";
+
+ var x = y;
+
+ y = "tale";
+
+ console.log(x) =&gt; results in "tail" (i.e., x and y are independent)
+</code></pre>
+
+<p> with</p>
+
+<pre><code> var y = [1, 2, 3, 4];
+
+ var x = y;
+
+ y[0] = "Bazoom";
+
+ console.log(x) =&gt; results in [Bazoom, 2, 3, 4] (i.e., x and y are linked)
+</code></pre>
+
+<p> For present purposes the point is this: <strong>When a function is assigned to a variable, a new copy is assigned to the variable, which is independent of any other copies.</strong>  Keep this in mind below.</p></li>
+</ol>
+
+
+<h4>Back to Where We Were</h4>
+
+<ol>
+<li><p>Note that what counts is when countDown is <strong>assigned</strong>, which creates a new set of scope variables.  So, for example, if we assign countDown to a new variable countDown1, and then assign countDown to another variable countDown2, we have two separate and independant countdowns!  Examine the following:</p>
+
+<pre><code>function wrapper() {
+    var counter = 5;
+    function countDown() {
+        result = counter + " and counting!");
+        counter--;
+        return (result);
+    }
+    return countDown
+}
+
+var countDown1 = wrapper();
+var countDown2 = wrapper();
+
+console.log(countDown1());  =&gt; 5 . . .
+console.log(countDown1());  =&gt; 4 . . .
+console.log(countDown2());  =&gt; 5 . . .
+console.log(countDown1());  =&gt; 3 . . .
+console.log(countDown1());  =&gt; 2 . . .
+console.log(countDown2());  =&gt; 4 . . .
+</code></pre></li>
+<li><p>Finally, note that with use of a closure, i.e., the countDown function and its scope variables or referencing environment, we have completely removed our counter from the global variable scope, so that even if 100 other coders declare variables named "counter", it won't be our problem because we will be inside our function scope.</p></li>
+</ol>
+
+</body>
+</html>

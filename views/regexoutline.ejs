@@ -1,0 +1,833 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>Regular Expressions in Javascript</title>
+
+</head>
+<body>
+<h2>Regular Expressions in Javascript</h2>
+
+<h3>Introduction</h3>
+
+<ol>
+<li><p>A <strong>regular expression</strong> is an object in Javascript that describes a pattern of characters.  It allows ways of searching or checking for patterns of characters.</p></li>
+<li><p>Regular expressions are often extremely dense and cryptic in appearance.  In fact, it is probably best to err on the side of caution in one's use of them, because they are very rigid and are often more difficult to read than to write, making it challenging for subsequent coders to understand.  Best to use with good commenting!</p></li>
+<li><p>On the other hand, they can be learned and implemented a little at a time - if one is comfortable with a use, and it makes the solution easier, go for it; if it is too difficult, just ignore them.</p></li>
+<li><p>Regular expressions usually have a significant performance advantage over equivalent string operations in Javascript (according to <em>Javascript, The Good Parts, page 65</em>).</p></li>
+<li><p>The following problem is from a code-challenge website.  Originally, I solved it without regular expressions in what was conceptually a pretty straightforward manner, but which became quite cumbersome.  Some months later, after learning a bit about regular expressions, I revised my solution to that set out below, which was much more straightforward and involved many fewer lines of code:</p>
+
+<p> <strong>Problem:</strong> <em>Create a function SimpleSymbols(str) to take the str parameter being passed and determine if it is an acceptable sequence by either returning 'true' or 'false' (as a string).  The str parameter will be composed of + and = symbols with several letters between them (i.e. ++d+===+c++==a) and for the string to be true each letter must be surrounded by a + symbol.  So the previous example would return false, as a is not followed by a +.  The string will not be empty and will have at least one letter.</em></p>
+
+<p> For now, don't worry about the meaning of the code, just note how easily one is able to code the inspections necessary to return the correct answer.  As you begin learning the syntax, revisit and see how well you understand what is being expressed.</p>
+
+<pre><code> function SimpleSymbols(str) { 
+
+     //check to see if the string begins or ends with a letter(which would violate the condition of having a '+' on each side)
+
+     if (/^[a-zA-Z]/.test(str) || /[a-zA-Z]$/.test(str)) {
+         return 'false'
+     }
+
+     //then check to see if there are any instances of a letter i) preceded by something other than a '+' or ii) followed by something other than a '+'
+
+     else if (/[^\+][a-zA-Z]/.test(str) || /[a-zA-Z][^\+]/.test(str)) {
+         return 'false'
+     }
+
+     else {
+         return 'true'
+     }
+ }
+</code></pre></li>
+</ol>
+
+
+<h3>Where to Use Regular Expressions</h3>
+
+<h4>RegExp Properties</h4>
+
+<h5>lastIndex</h5>
+
+<ol>
+<li>lastIndex is a RegExp property that specifies the index of the point immediately following the last match made by a RegExp pattern.  It applies only if the search pattern is using the global ('g') flag.  As discussed later, this flag directs the search to find all instances of a pattern match, rather than stopping after the first match is made.</li>
+<li><p>The lastIndex property starts at 0, and gets reset to 0 if no match is made by the exec() or test() methods.  The operation of the lastIndex property is illustrated below:</p>
+
+<pre><code> var str = "Ho, Ho, Ho, said the jolly old fat man.";
+ var pattern = /ho/ig;
+ console.log("lastIndex start: " + patt.lastIndex); =&gt; lastIndex start: 0)
+ while (patt.test(str) === true) {
+     console.log("now it is: " + patt.lastIndex);
+
+ =&gt;  now it is: 2
+     now it is: 5
+     now it is: 8
+</code></pre></li>
+</ol>
+
+
+<p>#</p>
+
+<h3>RegExp Methods</h3>
+
+<ol>
+<li>RegExp is an object type in javascript, just as Array, String, Date, etc.  RegExp has two methods that are commonly used, exec() and test().  Test() is the easier method, so let's begin with it:</li>
+</ol>
+
+
+<h5><strong>test()</strong></h5>
+
+<ol>
+<li>Test() is an RegExp method that checks a string to see if it contains the pattern set forth in the given regular expression.
+
+<ol type="a">
+<li>It takes a single parameter, being the string to be tested for a match.</li>
+<li> It has a boolean return value, i.e., true if a match occurs, and false if no match occurs.</li>
+<li>It has no side effects.</li>
+</ol>
+</li>
+</ol>
+
+
+<p>A simple example:</p>
+
+<pre><code>    var string = "Now is the winter of our discontent made glorious summer"
+
+    //below are two regular expressions, the first checks for the combo "ow":
+    var pattern1 = /ow/
+    //and the second looks for the pattern "cow":
+    var pattern2 = /cow/
+
+    console.log(pattern1.test(string)) =&gt; true
+    console.log(pattern2.test(string)) =&gt; false
+</code></pre>
+
+<p>Test() is a great method to use for practicing regular expressions.  As you learn the syntax, make up strings, RegExp objects, and see if they behave as you think they should.</p>
+
+<h5>exec()</h5>
+
+<ol>
+<li>Exec() is a more complicated method.  If no match is found, it returns the null object.  If a match is found, it returns an array, consisting of at least three elements, the first being the match value as a string, the second and subsequent being the "captured" values from the search, the penultimate being the index of the match, and the final being a repeat of the searched string.</li>
+</ol>
+
+
+<h4>String Methods</h4>
+
+<ol>
+<li>There are several string methods that can use regular expressions as arguments.  They will also take (or automatically convert) a string as an argument.  Each is listed below, with a description and an example.  I suggest skipping to the section on constructing regular expressions, working just with the "test()" method until comfortable, then coming back the the following (as well as to "exec()"), and testing them out.</li>
+</ol>
+
+
+<h5>search()</h5>
+
+<ol>
+<li>Search() is a string method that checks a string to see if it contains a designated item.
+
+<ol type="a">
+<li>it takes a single parameter, being a regular expression.  However, if a string is included as the argument rather than a regular expression, it will convert the string to a regular expression.</li>
+<li>it returns the index of the first match.  If no match is found, it returns -1.</li>
+<li> it has no side effects.</li>
+<li><p> compare with indexOf(), which will only take a string as a search value parameter, but also accepts an optional parameter of an index where to begin searching, which search does not have.</p>
+
+<pre><code> var str = "Now is the winter of our discontent made glorious summer";
+ pattern1 = /Discontent/;
+ pattern2 = /discontent/;
+ console.log(str.search(pattern1)); =&gt; -1
+ console.log(str.search(pattern2)); =&gt; 25
+</code></pre></li>
+</ol>
+</li>
+</ol>
+
+
+<h5>replace()</h5>
+
+<ol>
+<li><p>Replace() is a string method that checks a string to see if it contains a specified value, then replaces that value with a designated value. <strong>Note:</strong> It only replaces the first occurence of the found string, unless the search term is a regular expression with a global flag.</p>
+
+<ol type="a">
+<li>it takes two required parameters, i) a search value consisting of a regular expression or a string and ii) the value with which to replace any located items, which can be a string, or a function that will return a string.</li>
+<li>it returns a new string with the substitution(s) made.</li>
+<li><p> it has no side effects.</p>
+
+<pre><code> var str = 'Mr. Blue has a blue guitar and a blue car.'
+ pattern1 = 'blue';
+ pattern2 = /blue/g;
+ newItem = "red";
+
+ console.log(str.replace(pattern1, newItem)); =&gt; Mr. Blue has a red guitar and a blue car.
+ console.log(str.replace(pattern2, newItem)); =&gt; Mr. Blue has a red guitar and a red car.
+</code></pre></li>
+</ol>
+</li>
+<li><p>If the search pattern employs capturing parentheses, the items captured can be employed in the replacement by reference to their order number in a quotation string, preceded by "$".  See the following example:</p>
+
+<pre><code> var str = "John Smith in England";
+ var patt = /(\w+)\s(w+)\s(?:of|in|from)\s([A-Za-z\s]+)/
+ var newstring = str.replace(patt, '$2 Bazoom $1 of $3');
+ console.log(newstring) =&gt; "Smith Bazoom John of England";
+</code></pre></li>
+<li><p>The $ sign has other special meanings:</p>
+
+<ol type="a">
+<li>$$ will result in a "$" character,</li>
+<li>$&amp; will result in the matched string,</li>
+<li>$[int] will result in the intth captured string,</li>
+<li>$` will result in the text prior to the matched string.  Note that this can cause a cascading effect in cased where a -g flag is used.  It is difficult to imagine where one would want to use these together.</li>
+<li>$' will result in the text after the matched string.</li>
+</ol>
+</li>
+<li><p>See the following elemental examples:</p>
+
+<pre><code> var str = "John, Paul, George, &amp; Ringo"
+ var patt = /(pa)(ul)/i
+ var newStr = str.replace(patt, "Brian Wilson") =&gt; "John, Brian Wilson, George, &amp; Ringo"
+ var newStr = str.replace(patt, "$1 . .") =&gt; "John, Pa . ., George, &amp; Ringo"
+ var newStr = str.replace(patt, "Sir $&amp; McCartney") =&gt; "John, Sir Paul McCartney, George, &amp; Ringo"
+ var newStr = str.replace(patt, "$` (again)") =&gt; "John, John, (again), George, &amp; Ringo"
+</code></pre></li>
+</ol>
+
+
+<h5>split()</h5>
+
+<ol>
+<li>Split() is a string method that chops up the string according to a given separator value, and returns the parts in an array.  <strong>Note:</strong> the separator item ends up getting removed from the array.
+
+<ol type="a">
+<li>it takes two parameters, the first being the separator, which can be a string or regular expression.  The second is optional, being a number specifying a maximum number of array items.</li>
+<li>it returns an array containing the portions of the split string.</li>
+<li><p>it has no side effects.</p>
+
+<pre><code> var str = 'Mr. Blue has a blue guitar and a blue car.'
+ //find occurences of a single letter preceded and followed by a space.
+ var pattern1 = /\s\w\s/;
+ var arr = str.split(pattern1);
+ console.log(arr) =&gt; ['Mr. Blue has', 'blue guitar and', 'blue car.']
+</code></pre></li>
+</ol>
+</li>
+</ol>
+
+
+<h5>match()</h5>
+
+<ol>
+<li>Match is a string method that searches the object string for matches to a regular expression.
+
+<ol type="a">
+<li>it takes a single parameter, being a regular expression.  It is important to make certain that the global flag (g) is used if one wants all the matches.</li>
+<li>if there is no -g flag, then it will return the same array as the RegExp exec() method, i.e., an array containing: [0] the first match, [1] - [n] the n captured groups.  If there is no match, it returns null.</li>
+<li>if there is a -g flag, it returns an array containing all the matches, but leaving out the captured groups entirely.  Again, if there is no match, it returns null.</li>
+<li> it returns an array.  If the global flag is included in the regular expression, it returns an array of all the matching items.  If the global flag is not included, it returns an array containing the first match, the index of the match in the object string, and the entire object string.</li>
+<li><p>it has no side effects.</p>
+
+<pre><code> var str = "The rain in Spain falls mainly on the captain.";
+ //note the capturing parens in the pattern and what happens;
+ var pattern1 = /a(in)/;
+ //add the global flag
+ var pattern2 = /a(in)/g;
+ var arr1 = str.match(pattern1);
+ var arr2 = str.match(pattern2);
+
+ console.log(arr1) =&gt; ['ain', 'in', index: 5, input: 'The rain in Spain falls mainly on the captain.']
+
+ console.log(arr2) =&gt; ['ain', 'ain', 'ain', 'ain']
+</code></pre></li>
+</ol>
+</li>
+</ol>
+
+
+<h3>How to Make Them</h3>
+
+<ol>
+<li>There are two ways to make a regular expression object, by using a RegExp constructor, or by literal notation.  Using the constructor can be useful in some circumstances, particularly where one wishes to create a regular expression dynamically.  However, it is far more common to see them created by literal notation, and after a brief discussion of the constructor, this outline will use literal notation exclusively.</li>
+</ol>
+
+
+<h4>The RegExp Constructor</h4>
+
+<ol>
+<li><p>One can create a new regular expression in javascript using the <strong>RegExp constructor</strong>.  To do so, follow this pattern:</p>
+
+<pre><code>var pattern = new RegExp('[expression]', '[flags]')
+</code></pre></li>
+<li><p>Don't forget the final 'p' - it is 'RegExp', not 'RegEx'!</p></li>
+<li><p>The following is an example of the use of the constructor, in which a user is asked what word to search for in a string:</p>
+
+<pre><code>     var str = 'The rain in Spain falls mainly in the rainy zone!";
+     var input = 'rain';
+     //create the regular expression based on the input
+     pattern = new RegExp(input, 'g');
+     var arr = str.match(pattern)
+     console.log(arr) =&gt; ['rain', 'rain]
+</code></pre></li>
+</ol>
+
+
+<h4>Literal Notation</h4>
+
+<ol>
+<li><p>Regular expressions are denoted by the <strong>forward slashes</strong>.  In addition, the regular expression may be immediately followed by any of three flags ('i', 'g', or 'm'), which will be covered shortly.  The following is a declaration of a simple regular expression that matches the word sequence of letters 'to':</p>
+
+<pre><code>var regex = /to/
+</code></pre></li>
+<li><p>If we wanted to find 'To', 'TO', or 'tO' as well as 'to', we would follow it with the 'i' flag to make it case insensitive, as follows:</p>
+
+<pre><code> var regex = /to/i
+</code></pre></li>
+</ol>
+
+
+<h4>Regular Expression Syntax</h4>
+
+<ol>
+<li><p>The following section goes through a number of the symbols used to form regular expressions.  In order to practice them, I will (for the most part),  provide examples using the test() method described above, as it is very simple to use and delivers a easy to understand true/false response.  In addition, the following makes use of literal notation exclusively, but any of the following could be accomplished using the RegExp constructor.</p></li>
+<li><p>One can delay the inevitable by talking <em>about</em> regular expressions, complaining about them, or pretending to understand them in theory.  However, to be able to use them (whether in writing code or, even more challenging, reviewing previously written code), one must at some point simply memorize a rather modest amount of syntax.  I suggest two approaches for doing this: first, make flash cards, a dual column list, or some other means of concretely testing one's memory, then go through the cards once a day until they are solidly in memory.  Second, use them in code, even if only in small snippets.  The only way to really learn how they work is to actually use them.</p></li>
+</ol>
+
+
+<h5>Rule 1: Begin and End the Regular Expression With "/"</h5>
+
+<h5>Rule 2: A regular expression consisting of only of simple char values merely matches the target against that exact string.</h5>
+
+<ol>
+<li>Although not used when using the RegExp constructor, the more typical way one will see regular expressions is as a string of characters beginning and ending with a forward slash.</li>
+<li><p> The easiest example of a regular expression is one in which there is nothing going on except a simple search.  Of course, this does not add any functionality to simply using indexOf() with a string, but it is a place to start: Examples:</p>
+
+<pre><code>var pattern = /dog/;
+var strings = ["cat", "dog", "doggie", "dig", "Thou shalt have no other Dogs before me"];
+var results = strings.map(function(val){
+    return pattern.test(val);
+});
+
+console.log(results) // =&gt; [false, true, true, false, false]
+
+
+var pattern = /3.14/;
+var string = "The value of many numbers cannot be expressed in a finite number of decimal digits.  For example, the value of pi is only approximated by the digits 3.1415 and even rational fractions often result in unending decimal representations."
+
+console.log(pattern.test(string)) // =&gt; true
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 3:  A "." is a wild card character that represents any other character (except line terminators).</h5>
+
+<ol>
+<li><p>In many search contexts, "*" is the wild card character.  It has another purpose in regular exprsessions, so keep them separate.  Examples:</p>
+
+<pre><code> var pattern = /h.t/;
+ var strings = ['hat', 'http', 'hot', 'the', 'hetero', 'hint', 'h#t'];
+ var res = strings.map(function(val){
+     return pattern.test(val);
+ })
+
+ console.log(res); // =&gt; [true, true, true, false, true, false, true]
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 4: A "\w" denotes a word-class character.  A "\W" denotes anything but.</h5>
+
+<ol>
+<li>A "word class" character is a letter, a numeric digit, and an underscore.  A backslash and lower case "w" is basically a wild card whose wildness is limited to these characters.</li>
+<li>A backslash followed by an upper case "W" indicates a non-word-class character, basically a wildcard whose wildness is limited to anything <em>other than</em> letters, numeric digits, and underscores.</li>
+<li><p>Note the following examples:</p>
+
+<pre><code> var pattern = /\w\w\w\W\w\w\w\W\w\w\w\w/
+ var strings = ['757-425-6200', '757_425_6300', 'Why she left'];
+
+ var res = strings.map(function(val){
+     return pattern.test(val);
+ });
+
+ console.log(res); =&gt; [true, false, true];
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 5: A "\d" denotes the digits class. A "\D" denotes anything but.</h5>
+
+<ol>
+<li>Similar to the use of the "\w" above, a backslash followed by a lower-case "d" indicates a digit character (0123456789), and an upper-case "D" denotes any character <em>other than</em> a numeric digit.</li>
+<li><p>Note that these are <strong>not numbers</strong>, but string characters that are digits.</p>
+
+<pre><code>var pattern = /\d\d\d\D\d\d\d\D\d\d\d\d/
+var strings = ['757-425-6200', '757_425_6300', 'Why she left'];
+
+var res = strings.map(function(val){
+    return pattern.test(val);
+});
+
+console.log(res); =&gt; [true, true, false]
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 6: A "\s" denotes a whitespace class character.  A "\S" denotes anything but.</h5>
+
+<ol>
+<li><p>Similar to "\w", and "\d", a backslash followed by a lower-case "s" indicates a whitespace-class character.  These include spaces, tabs, newlines, returns, and several other characters.  For a complete listing, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp</p></li>
+<li><p>Also as above, a backslash followed by an upper-case "S" indicates any character <em>other than</em> a whitespace-class character.</p>
+
+<pre><code> var pattern = /\S\S\S\s\S\S\S\s\S\S\S\S/
+ var strings = ['757-425-6200', '757 425 6300', 'Why\nshe\tleft'];
+
+ var res = strings.map(function(val){
+     return pattern.test(val);
+ });
+
+ console.log(res); // =&gt; [false, true, true]
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 7: Brackets[] are used to provide groups of characters.</h5>
+
+<ol>
+<li>The groupings above (i.e., \w \d \s \W \D \S) can be useful but are quite broad.  We can define other groupings using brackets[].</li>
+<li>Alternatives can be included inside brackets, without any separating commas or other notation.  For example, if we want to search for a vowel, we could search for [aeiou].</li>
+<li>Dashes can be used inside brackets to indicate a range of characters.  For example, if we want to find a lower-case letter, rather than type all twenty-six inside the bracket, we can type [a-z].  To find a digit, we can type [0-9].  To find any letter(but not the underscores or digits that "\w" would pick up), we can type [a-zA-Z].</li>
+<li><strong>IMPORTANT:</strong>The symbol ^ means "not" when in is included inside brackets.  It has another meaning outside brackets.  Do not confuse them.  Thus, [^abc] will search for anything <em>other than</em> the letters a, b, or c.</li>
+<li><p>Also, note that we are still searching for one character at a time. The notation [a-z] searches for a single character that is a lowercase letter.</p>
+
+<pre><code>var pattern = /[1-3]/
+var strings = ['757-445-6600', '757 425 6300', 'Why\nshe\tleft'];
+var res = strings.map(function(val){
+    return pattern.test(val);
+});
+console.log(res); // =&gt; [false, true, false]
+
+
+var pattern = /[BN][uo][sw]/
+var strings = ['Now is the winter of our discontent', 'Busing is controversial', 'Go to Boston'];
+var res = strings.map(function(val){
+    return pattern.test(val);
+});
+console.log(res); =&gt; [true, true, true]
+
+
+var pattern = /[^Bn][uo][sw]/
+var strings = ['Now is the winter of our discontent', 'Busing is controversial', 'Lost in Boston'];
+var res = strings.map(function(val){
+    return pattern.test(val);
+});
+console.log(res); =&gt; [true, false, true]
+</code></pre></li>
+</ol>
+
+
+<h5>Rules 8: An asterisk (*) causes a match of zero or more of a specified character.</h5>
+
+<ol>
+<li>As noted before, the * is not strictly a wildcard (which is "."), but acts in a somewhat similar fashion, causing a search for strings having zero or more of the specified item.</li>
+<li><p>Note the following examples:</p>
+
+<pre><code> var patterns = [/\d[a-z]\d/, /\d[a-z]*\d/, /\d*[a-z]*\d/];
+ var string = '32test5';
+ var res = patterns.map(function(val){
+     return val.test(string);
+ });
+ console.log(res); // =&gt; [false, true, true];
+</code></pre></li>
+<li><p>In the above examples, what were the found matches, that allowed the second and third examples to return true?</p>
+
+<ol type="a">
+<li>in the first, there was no match because we needed one digit, followed by one lower-case letter, followed by one digit.  That was not present.</li>
+<li>in the second, we had a match, because we had one digit, followed by zero or more lower-case letters, followed by one digit.  The match was "2test5".</li>
+<li>in the third, we had a match, because we had zero or more digits, followed by zero or more lower-case letters, followed by one digit.  The match was "32test5".</li>
+</ol>
+</li>
+</ol>
+
+
+<h5>Rule 9: A plus (+) causes a match of one or more of a specified character.</h5>
+
+<ol>
+<li><p>Technically, the "+" operates very similarly to the "*".  However, "+" requires at least one instance of the value to which it is appended.  Compare the following examples:</p>
+
+<pre><code>var patterns = [/\d+[a-z]\d/, /\d[a-z]+\d/, /\d+[a-z]+\d/];
+var string = '32ab5';
+var res = patterns.map(function(val){
+    return val.test(string);
+});
+console.log(res); // =&gt; [false, true, true];
+</code></pre></li>
+<li><p>In the above examples, the found matches were:</p>
+
+<ol type="a">
+<li>in the first, there was no match, because we needed to have one or more digits, followed by a single lower-case letter, followed by a single digit.</li>
+<li>in the second, we did have a match, which was "2ab5".</li>
+<li>in the third, the match is a little broader, even though both the second and third return true to the test() method.  It is "32ab5".</li>
+</ol>
+</li>
+</ol>
+
+
+<h5>Rule 10: A question mark (?) causes a match of 0 or 1 of a specified character.</h5>
+
+<ol>
+<li><p>A question mark, following a search value, causes a match on zero or one of the specified characters.  Thus:</p>
+
+<pre><code> var pattern = /d?/
+ var strings = ['test', 'test1', 'test23423'];
+ var res = strings.map(function(val){
+     return pattern.test(val)
+ });
+ console.log(res); // =&gt; [true, true, true]
+</code></pre></li>
+<li><p>Note the last result.  There are many more than zero or one numbers.  However, it tests true, because the match <em>requires</em> only zero or one items, it is not restricted to only zero or one.  The actual match in the last item is "2," the "3423" are not included in the match, but their presence doesn't affect the validity of the match.</p></li>
+</ol>
+
+
+<h5>Rule 11: Brackets following an expression are used to indicate a number of repetitions.</h5>
+
+<ol>
+<li><p>The * and + quantifiers are quite broad, covering "0 or more", or "one or more", respectively.  For finer control, we can use brackets {} containing numbers.  If we wanted to find repetitions of the letter "n", we could do the following:</p>
+
+<ol type="a">
+<li>n{5} would look for five ns in a row.</li>
+<li>n{3,5} would look for three, four, or five ns.</li>
+<li>n{3,} would look for three or more ns.  Thus, n+ is the same as n{1,}.</li>
+</ol>
+</li>
+<li><p>The following example is a much easier to read validation of a telephone number:</p>
+
+<pre><code> var pattern = /\d{3}-\d{3}-\d{4}/;
+ var string = '212-867-5309';
+ var res = pattern.test(string);
+ console.log(res); // =&gt; true;
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 12: Unless otherwise noted, search results are "Greedy"".  Use "?" to make them "Nongreedy".</h5>
+
+<ol>
+<li>Because we have been using the test() method to try out the above rules, we have seen only whether or not a search is satisfied.  We have not had returned what it is satisfied with (although the last couple of examples have this information below).</li>
+<li><p>The exec() method returns the actual match, if the search is successful.  Thus, one can see if the search result of /\d+/ in "123" is "1" or "123".  Unless otherwise instructed, the search result will be ""greedy", i.e., it will contain as many characters as it can.  Thus:</p>
+
+<pre><code>var pattern = /\d+/;
+var string = "123";
+console.log(pattern.exec(string)) // =&gt; "123"
+</code></pre>
+
+<p>This is because the search is for one or more digits, and the biggest result will be all three digits.</p></li>
+<li><p>The question symbol (?), when following a quantifier, converts it from being "greedy" to being "nongreedy", i.e., it is satisfied with the smallest match that will satisfy the search.<strong>Important:</strong>Don't forget that the question mark has another meaning, that of being a zero or one quantifier.  Also, when searching for a question mark, one should use an escape \ to denote it.  See the following examples:</p>
+
+<pre><code>var pattern = /\d+?/;
+var string = "123";
+console.log(pattern.exec(string)) // =&gt; "1"
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 13: The search term can be sought at the beginning or end of a string by use of ^ and $, respectively.</h5>
+
+<ol>
+<li>The symbols ^ and $ are used to mark the beginning and end, respectively, of the search string.  For example, if it is important that the very first character of a string is "A", we could begin our search /^A . . ./.</li>
+<li><strong>NOTE:</strong>Do not confuse the use of ^ in this location with the use of ^ inside brackets [], where it means "not," as discussed above.</li>
+<li><p>By using both the ^ at the beginning and the $ at the end of our regular expression, we can control the entire thing much more closely.  For example, if we were validating a telephone number input, we might try (as presented above):</p>
+
+<pre><code>var pattern = /\d{3}-\d{3}-\d{4}/;
+var string = '212-867-5309';
+var res = pattern.test(string);
+console.log(res); // =&gt; true;
+</code></pre></li>
+<li><p>However, this would also return true if the number entered were '212-867-53094hotsexxx'.  But if we include the ^ and $, we can assure that we return true only on values that match, without extraneous material, as illustrated below:</p>
+
+<pre><code>var patterns = [/\d{3}-\d{3}-\d{4}/, /^\d{3}-\d{3}-\d{4}$/];
+var string = '212-867-53094hotsexxx';
+var res = patterns.map(function(val) {
+    return val.test(string);
+});
+console.log(res); // =&gt; [true, false];
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 14: The search term can be sought at the beginning or end of a word by use of \b, or not at the beginnig or end of a work by use of \B.</h5>
+
+<ol>
+<li><strong>Note</strong> that the pattern "[\b]" is used to signify a backspace.  Do not mix up with this "\b".</li>
+<li><p>The \b can be used in front of, or at the end of, a search term, signifying that it should be found at the beginning or end of a word (i.e., a string bounded by spaces).  See the following examples:</p>
+
+<pre><code> var string = "Now is the winter of our discontent made glorious summer";
+ var patterns = [/\bdis/, /nt\b/, /\bnt/, /\b[aeiou]/];
+ var res = patterns.map(function(val){
+     return val.test(string);
+ })
+ console.log(res);// =&gt; [true, true, false, true];
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 15: Alternative (logical or) searches can be made using the pipe character (|).</h5>
+
+<ol>
+<li><p>The pipe character can be used to provide alternative items to search.  For example, if we were looking for a title, but did not know what it would be, the following would check for any of the listed possibilities:</p>
+
+<pre><code> var pattern = /Mr\.|Mrs\.|Ms\./|Dr\.;
+ var strings = ['Telephone message for Mr. Man.', 'Telephone message for Ms. Kim.', 'Telephone message for Miss Molly.', 'Paging Dr. Watson']
+
+ var res = strings.map(function(val){
+     return pattern.test(val);
+ })
+ console.log(res); =&gt; [true, true, false, true];
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 16: Parenthesis are used to indicate portions of a matched substring that are to be remembered.</h5>
+
+<ol>
+<li><p>Putting parentheses around a portion of a portion of the regular expression pattern will cause it to be "captured," i.e., remembered.  For now, we will not worry about what we can do with the captured portions.  We can see the captured portions if we use the exec() function, which returns an array, the first element of which is the matching string, followed by the captured matching pieces in elements one through however many matches there are, followed by the index and input elements. For example, compare the following:</p>
+
+<pre><code> var string = "Now is the winter of our discontent";
+ var pattern = /the\swin/
+ var res = pattern.exec(string);
+ console.log(res); =&gt; ['the win', index: 7, input: 'Now is the winter of our discontent']
+
+ //Now, with parenthesis:
+
+ var string = "Now is the winter of our discontent";
+ var pattern = /(the)\s(win)/
+ var res = pattern.exec(string);
+ console.log(res); =&gt; ['the', 'the', 'win', index: 7, input: 'Now is the winter of our discontent']
+</code></pre>
+
+<p> Note that in the second example, the array returned contains two more items, at res[1] and res[2], being the captured items.</p></li>
+</ol>
+
+
+<h5>Rule 17: The capturing effect of parentheses can be negated by use of "?:".</h5>
+
+<ol>
+<li>There are times when one might wish to use parentheses to group characters, without causing them to be captured.  For example, the reptition brackets discussed in Rule ___ will only operate on the 'w' of Now{3}, causing a search for "Nowww", whereas (Now){3} will search for NowNowNow.</li>
+<li><p>In the above example, we only want the parentheses to group our letters for application of the {3} operator, but use of the parentheses will cause the string "Now" to be captured.  We can prevent capturing by preceding the item in parentheses with a question mark and colon (?:).  Compare the following:</p>
+
+<pre><code> var str = "Ho Ho Ho said the fat man.";
+ var patt = /(Ho\s){3}/
+ var res = patt.exec(str);
+
+ console.log(res); =&gt; ['Ho Ho Ho ', 'Ho ', index: 0, input: 'Ho Ho Ho said the fat man.']
+
+ //Now with the noncapturing syntax:
+
+ var str = "Ho Ho Ho said the fat man.";
+ var patt = /(?:Ho\s){3}/
+ var res = patt.exec(str);
+
+ console.log(res); =&gt; ['Ho Ho Ho ', index: 0, input: 'Ho Ho Ho said the fat man.']
+</code></pre></li>
+</ol>
+
+
+<h5>Rule 16: Matches can be made dependent on the presence (?=) or absence(?!) of subsequent items that are not included in the match.</h5>
+
+<ol>
+<li><p>This is known as either a positive or negative lookahead.  For example:</p>
+
+<pre><code>    var pattern1 = /aq(?=u)/;
+    var pattern2 = /aq(?!u)/;
+    var string = 'aquamarine in Iraq';
+    var string2 = 'aq uamarine in Iraq';
+    console.log(pattern1.exec(string)); =&gt; ['aq', index: 0];
+    console.log(pattern2.exec(string)); =&gt; ['aq', index: 16];
+    console.log(pattern2.exec(string2)); =&gt; null;
+</code></pre></li>
+<li>In the first pattern, we are using a positive lookahead, i.e., looking for instances of "aq," but only where it is immediately followed by the letter 'u'.  In the last example, because of the space inserted into the word 'aquamarine' in string2, there is no match.  In the second pattern, we are using a negative lookahead, i.e., looking for instances of 'aq' not immediately followed by the letter 'u'.</li>
+</ol>
+
+
+<h4>Flags</h4>
+
+<ol>
+<li>The main body of the regular expression can be followed by one or more of three flag characters, as follows:
+
+<ol type="a">
+<li><p><strong>i</strong> makes the search case-insensitive.  Note that it makes the entire search case insensitive.  For example, if one is searching for "newtonian" but isn't certain if it will have an upper-case first letter, but wished to exclude any word with upper-case letters other than the first, one should use:</p>
+
+<pre><code> var pattern = /[nN]ewtonian/, and not
+ var pattern = /newtonian/i
+</code></pre></li>
+<li><p><strong>g</strong> is for global search.  Without a g flag, the search runs until it has a hit.  This doesn't make any difference in the test() method, in which the return value switches from false to true on the first occurence and that is it.  But in other contexts, it makes a big difference.  See the following examples:</p>
+
+<pre><code> var pattern1 = /blue/;
+ var pattern2 = /blue/g;
+ var string = "My favorite color is blue.  When I become rich, I'm going to buy a blue car, a blue house, a blue dog, and get a blue tatoo."
+ var res = string.replace(pattern1, 'red');
+ var res2 = string.replace(pattern2, 'red');
+ console.log(res) // =&gt; "My favorite color is red.  When I become rich, I'm going to buy a blue car, a blue house, a blue dog, and get a blue tatoo."
+ console.log(res2) // =&gt; "My favorite color is red.  When I become rich, I'm going to buy a red car, a red house, a red dog, and get a red tatoo."
+</code></pre></li>
+<li><p><strong>m</strong> is for multiline mode. It treats the beginning and end characters (the ^ and $ characters described above, as working for each line, not over the entire input string.  Compare the following:</p>
+
+<pre><code> var pattern1 = /^\d{3}-\d{3}-\d{4}$/;
+ var pattern2 = /^\d{3}-\d{3}-\d{4}$/m;
+ var string = "757-225-1234\n757-345-8765\n123-876-5678"
+
+ var res1 = pattern1.test(string);
+ var res2 = pattern2.test(string);
+
+ console.log(res1) // =&gt; false
+ console.log(res2) // =&gt; true;
+</code></pre></li>
+</ol>
+</li>
+</ol>
+
+</body>
+</html>

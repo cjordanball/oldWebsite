@@ -1,0 +1,261 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    overflow: visible;
+}
+
+h2 {
+    text-align: center;
+}
+
+a:link {
+    text-decoration: none;
+    color: navy;
+}
+
+a:hover {
+    text-shadow: 5px 5px 6px grey;
+}
+
+.back {
+    margin-top: -50px;
+    padding: 0px;
+    background: url('/images/beachDawn.jpg');
+    background-size: cover;
+    width: 100%;
+    height: 110%;
+    position: fixed;
+    z-index: -100;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.cjbContainer {
+    width: 80%;
+    max-width: 960px;
+    margin: auto;
+}
+#BytesContainer {
+    padding: 50px;
+}
+p {
+    text-align: justify;
+}
+#containerIntro {
+    padding: 10px;
+    width: 80%;
+    max-width: 800px;
+    max-height: 200px;
+    overflow: auto;
+    background-color: #ccc;
+    margin: auto;
+    border-radius: 20px;
+}
+#buttonCollection {
+    width: 80%;
+    max-width: 800px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+#topbar {
+    background-color: hsla(0, 0%, 0%, .7);
+    background-image: linear-gradient(hsla(240, 100%, 40%, .7), hsla(240, 100%, 20%, .2));
+    height: 50px;
+    max-width: inherit;
+    width: inherit;
+    position: fixed;
+    top: 0;
+    color: white;
+    list-style-type: none;
+    font-family: actor, serif;
+    letter-spacing: 4px;
+    text-align: center;
+}
+.big {
+    display: inline-block;
+    padding-top: 15px;
+    text-shadow: 3px 3px 5px pink;
+    font-size: 1.5vw;
+}
+.small {
+    display: none;
+    padding: 3px 0 5px 0;
+    text-shadow: 2px 2px 3px pink;
+    font-size: 1.5rem;
+}
+
+.hidden {
+    display: none;
+}
+
+#navbar {
+    background-color: hsla(200, 70%, 90%, .7);
+    position: fixed;
+    /*top: 50px;*/
+    width: inherit;
+    max-width: inherit;
+    height: 25px;
+    font-family: actor, serif;
+    font-size: 1.2vw;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+#bannerPhoto {
+    width: 100%;
+    max-width: 960px;
+    height: 40vw;
+    background-image: url('/images/CJB-3trim.jpg');
+    background-size: 80vw;
+    border-radius: 10px;
+}
+
+#contentBox {
+    width: 100%;
+    max-width: inherit;
+    margin-top: 50px;
+    background-color: hsla(0, 100%, 100%, 0);
+    font-family: actor, serif;
+    font-size: 1.2rem;
+}
+
+ul, .content {
+    display: -webkit-flex;
+}
+
+.image {
+    -webkit-flex: 1;
+    -webkit-align-self: center;
+    text-align: center;
+}
+
+img {
+    max-width: 75%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.text {
+    -webkit-flex: 1;
+    -webkit-align-self: center;
+    text-align: justify;
+}
+.right {
+    padding-right: 1vw;
+}
+.left {
+    padding-left: 1vw;
+}
+.space {
+    width: inherit;
+    max-width: inherit;
+    height: 20vw;
+    max-height: 100px;
+}
+
+.content {
+    background-color: hsla(0, 100%, 100%, .7);
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0 0 20px 20px hsla(0, 100%, 100%, .3);
+    -webkit-flex-grow: 1;
+}
+
+#final {
+    height: 200px;
+    background-color: hsla(0, 100%, 100%, 0);
+    color: white;
+}
+
+#final h1 {
+    display: inline-block;
+    font-size: 4vw;
+}
+
+button {
+    background-color: white;
+    background-size: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+
+}
+
+.showing {
+    background-color: yellow;
+}
+
+.list {
+    min-height: 25px;
+}
+
+li {
+    padding-top: 3px;
+    background: transparent;
+    color: navy;
+}
+
+ul {
+    padding: 0;
+    width: inherit;
+    max-width: inherit;
+    margin: auto;
+    list-style-type: none;
+    -webkit-flex-direction: row;
+    -webkit-justify-content: space-between;
+}
+
+/* Media Queries -------------------------*/
+
+@media (max-width: 768px) {
+    .image {
+        display: none;
+    }
+    .big {
+        display: none;
+    }
+    .small {
+        display: inline-block;
+    }
+    .left, .right {
+        padding: 0px 5px 5px 5px;
+    }
+    button {
+        font-size: 15px;
+    }
+    #navbar {
+        position: top;
+        padding-top: 5px;
+        height: 17px;
+    }
+    #topbar {
+        letter-spacing: 2px;
+        height: 35px;
+    }
+    #contentBox {
+        font-size: .8rem;
+        margin-top: 35px;
+    }
+}
+
+@media (min-width: 960px) {
+    #navbar {
+        font-size: 1rem
+    }
+    #topbar {
+        font-size: 1.5rem;
+    }
+    #bannerPhoto {
+        background-size: 960px;
+        height: 480px;
+    }

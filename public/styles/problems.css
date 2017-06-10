@@ -1,0 +1,57 @@
+.outer {
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 80vw;
+    min-height: 100%;
+    max-width: 800px;
+    background-color: #eee ;
+    margin: 0 auto;
+}
+
+.dark {
+    background-color: black;
+    border-radius: 15px;
+    transition-property: background-color;
+    transition-duration: 2s;
+}
+
+.vis {
+    background-color: #eee;
+    transition-property: background-color;
+    transition-duration: 2s;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 50px;
+}
+
+p {
+    text-indent: 20px;
+}
+button {
+    height: 25px;
+    width: 90px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: pink;
+}
+
+.title {
+    font-weight: bold;
+    font-variant: small-caps;
+}
+
+.code {
+    white-space: pre-wrap;
+    width: 80%;
+    margin: 0 auto;
+    font-family: monospace;
+}
+
+.bold {
+    font-weight: bold
+}

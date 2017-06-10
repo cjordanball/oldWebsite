@@ -1,0 +1,146 @@
+<%include partials/header%>
+<div id='BytesContainer'>
+    <h2>Get Ready for Some Fun Challenges</h2>
+    <div id='containerIntro'>
+        <p>The following problems are listed in the order listed on the coderbyte.com website under "Challenges." In addition to listing them with their given name (in order to make lookup easier, just in case these problems do get out of order), I have included a descriptive comment for each one, to give a better idea of what the challenge entails.</p>
+        <p>The problems are also placed into one of three levels of difficulty, taken from the coderbyte.com listing. Keep in mind that the assignment of difficulty level is hardly definitive, for a number of reasons. Particularly at the novice level, a problem may be more or less dificult because of the particular programming language one uses, and what might be done in one line using a built-in method in Ruby, for example, might take several lines to do manually in JavaScript. More advanced users will be more experienced in the idiosyncracies of their chosing languages, but difficulty may still vary from one user to another. In particular, application of a bit of "inside-knowledge" may make a problem much easier. As a trivial example, consider adding the sum of a series of integers from 1 to x (Easy Problem 5). While easily done in a simple loop, and more cleverly done in a recursive manner, applying the knowledge that the answer is simply x * (x + 1) / 2 is easier still, and far quicker.</p>
+        <p>One should keep in mind that there are always a multitude of ways to do these kind of problems, and your particular answer may look far different from mine. My main goal in doing these problems was to develop a clear and easy-to-follow coding style, and to practice new methods and techniques as I learned them. Thus, if you find that I used a map() method on an array when a simple for loop might have been more convenient, it may be that I had just learned the array iterative methods and wanted to try them out.</p>
+        <p>Finally, there is also a category of "Miscellaneous" problems.  These are not from the Coderbyte website, but have points of interest.</p>
+
+    </div>
+    <div id='buttonCollection'>
+        <button id="butt1" onclick="show('easy', 'butt1')">Easy</button>
+        <button id="butt2" onclick="show('medium', 'butt2')">Medium</button>
+        <button id="butt3" onclick="show('hard', 'butt3')">Difficult</button>
+        <button id="butt4" onclick="show('misc', 'butt4')">Misc</button>
+    </div>
+    <div id='easy' class='hidden'>
+        <h2>Easier Difficulty</h2>
+        <div class='list'><a href=/byte/easy001>Problem 1</a>: Simple reverse the string problem.</div>
+        <div class='list'><a href=/byte/easy002>Problem 2</a>: Create a function returning a factorial.  Iterative and Recursive solutions presented.</div>
+        <div class='list'><a href=/byte/easy003>Problem 3</a>: Returns the longest word in a string.</div>
+        <div class='list'><a href=/byte/easy004>Problem 4</a>: Perform required letter substitutions in a string.</div>
+        <div class='list'><a href=/byte/easy005>Problem 5</a>: Summing a integer series.  Three solutions presented: iterative, recursive, and clever (attributed to a young Gauss).</div>
+        <div class='list'><a href=/byte/easy006>Problem 6</a>: Capitalize first letter of each word in a string.</div>
+        <div class='list'><a href=/byte/easy007>Problem 7</a>: Analyze sequences of letters and symbols.  Solution is good example of how regular expressions can simplify things.</div>
+        <div class='list'><a href=/byte/easy008>Problem 8</a>: Comparison of number values.</div>
+        <div class='list'><a href=/byte/easy009>Problem 9</a>: Convert minutes into hours/minutes.</div>
+        <div class='list'><a href=/byte/easy010>Problem 10</a>: Order letters in a string alphabetically.</div>
+        <div class='list'><a href=/byte/easy011>Problem 11</a>: Check for spacing of two letters in string.  Good example of regular expressions making a problem trivial.</div>
+        <div class='list'><a href=/byte/easy012>Problem 12</a>: Count vowels in a string.</div>
+        <div class='list'><a href=/byte/easy013>Problem 13</a>: Counting the words in a string.</div>
+        <div class='list'><a href=/byte/easy014>Problem 14</a>: Comparing number of x's and o's in a string.</div>
+        <div class='list'><a href=/byte/easy015>Problem 15</a>: Checking a string to see if it is a palindrome.</div>
+        <div class='list'><a href=/byte/easy016>Problem 16</a>: Determine if a series of numbers contained in an array follows an arithmetic or geometric progression.</div>
+        <div class='list'><a href=/byte/easy017>Problem 17</a>: Check if any combination of an array of numbers adds up to a target number.</div>
+        <div class='list'><a href=/byte/easy018>Problem 18</a>: Return the word in a string with the greatest number of repeated letters.</div>
+        <div class='list'><a href=/byte/easy019>Problem 19</a>: Return the second smallest and second largest numbers in an array.  Repeat numbers only count once.</div>
+        <div class='list'><a href=/byte/easy020>Problem 20</a>: Return string value, with commas, of division result.</div>
+        <div class='list'><a href=/byte/easy021>Problem 21</a>: Parsing time strings, and determining time interval.</div>
+        <div class='list'><a href=/byte/easy022>Problem 22</a>: Determine the mean and mode of a group of integers and compare them.</div>
+        <div class='list'><a href=/byte/easy023>Problem 23</a>: Insert dashes into a number according to instructions.</div>
+        <div class='list'><a href=/byte/easy024>Problem 24</a>: Swapping case of letters in a string.</div>
+        <div class='list'><a href=/byte/easy025>Problem 25</a>: Locate and sum integers contained in a string.</div>
+        <div class='list'><a href=/byte/easy026>Problem 26</a>: Return the third longest word within an array of strings.</div>
+        <div class='list'><a href=/byte/easy027>Problem 27</a>: Determine if integer is a power of two (interesting solution with regex).</div>
+        <div class='list'><a href=/byte/easy028>Problem 28</a>: Determine the "additive persistence" of a given positive integer.</div>
+        <div class='list'><a href=/byte/easy029>Problem 29</a>: Determine the "mulitiplicative persistence" of a given positive integer.</div>
+        <div class='list'><a href=/byte/easy030>Problem 30</a>: Return array of minimum numbers existing in an array at certain times.</div>
+        <div class='list'><a href=/byte/easy031>Problem 31</a>: Find where numbers in an array change from increasing to decreasing, or vice-versa.</div>
+        <div class='list'><a href=/byte/easy032>Problem 32</a>: Determine whether two ranges overlap by a predetermined amount.</div>
+        <div class='list'><a href=/byte/easy033>Problem 33</a>: Determine if each number of an array is greater than the sum of all prior numbers.</div>
+        <div class='list'><a href=/byte/easy034>Problem 34</a>: Determine the number of differences in two strings.</div>
+        <div class='list'><a href=/byte/easy035>Problem 35</a>: Calculate the area of a Rectangle Generated by Four Points.</div>
+        <div class='list'><a href=/byte/easy036>Problem 36</a>: Perform a bitwise OR operation on two strings.</div>
+    </div>
+    <div id='medium' class='hidden'>
+        <h2>Medium Difficulty</h2>
+        <div class='list'><a href=/byte/med001>Problem 1</a>: Determine if a number is prime.</div>
+        <div class='list'><a href=/byte/med002>Problem 2</a>: Compress a string according to given algorithm.</div>
+        <div class='list'><a href=/byte/med003>Problem 3</a>: Return the nth prime number.</div>
+        <div class='list'><a href=/byte/med004>Problem 4</a>: Determine whether a string is a palindrome.</div>
+        <div class='list'><a href=/byte/med005>Problem 5</a>: Determine the greatest common factor of two numbers</div>
+        <div class='list'><a href=/byte/med006>Problem 6</a>: Determine if one string can be constructed from letters contained in other string.</div>
+        <div class='list'><a href=/byte/med007>Problem 7</a>: Determine if an array of numbers follows an arithematic or geometric pattern.</div>
+        <div class='list'><a href=/byte/med008>Problem 8</a>: Determine if numbers in an array can add up to equal a target number.</div>
+        <div class='list'><a href=/byte/med009>Problem 9</a>: Return base-10 representation of number given in base 2.</div>
+        <div class='list'><a href=/byte/med010>Problem 10</a>: Return word in string with greatest number of repeated letters.</div>
+        <div class='list'><a href=/byte/med011>Problem 11</a>: Caesar cipher implementation.</div>
+        <div class='list'><a href=/byte/med012>Problem 12</a>: Return the mode of a list array of numbers.</div>
+        <div class='list'><a href=/byte/med013>Problem 13</a>: Determine the number of integers necessary to fill in a number sequence.</div>
+        <div class='list'><a href=/byte/med014>Problem 14</a>: Divide numbers and format answer as string with commas.</div>
+        <div class='list'><a href=/byte/med015>Problem 15</a>: Determine number of minutes between two times in string format.</div>
+        <div class='list'><a href=/byte/med016>Problem 16</a>: Determine which permutation of digits most narrowly exceeds a target number.</div>
+        <div class='list'><a href=/byte/med017>Problem 17</a>: Determine if any permutation of digits of a given number is a prime number.</div>
+        <div class='list'><a href=/byte/med018>Problem 18</a>: Insert dashes and asterisks into a string of numbers according to given pattern.</div>
+        <div class='list'><a href=/byte/med019>Problem 19</a>: Manipulating case and positions of characters in a string according to given pattern.</div>
+        <div class='list'><a href=/byte/med020>Problem 20</a>: Sorting digits and letters in a string, then performing a given calculation.</div>
+        <div class='list'><a href=/byte/med021>Problem 21</a>: Evaluate two strings to determine if pattern of triple or duple repeated digits exists.</div>
+        <div class='list'><a href=/byte/med022>Problem 22</a>: Bracket matching problem.  Trivial.</div>
+        <div class='list'><a href=/byte/med023>Problem 23</a>: Reduce a string of a, b, and cs based on requested pattern.</div>
+        <div class='list'><a href=/byte/med024>Problem 24</a>: Return sum of all specified multiples of three and five (three solutions and speed tests).</div>
+        <div class='list'><a href=/byte/med025>Problem 25</a>: Determine least amount of coins to return as change; nonstandard denominations (1, 5, 7, 9, 11).</div>
+        <div class='list'><a href=/byte/med026>Problem 26</a>: Evaluate whether given number is in Fibonnaci series.</div>
+        <div class='list'><a href=/byte/med027>Problem 27</a>: Determine if multiple sets of brackets in a string correctly match up.</div>
+        <div class='list'><a href=/byte/med028>Problem 28</a>: Parse and arrage of time blocks written as strings and determine largest block of free time.</div>
+        <div class='list'><a href=/byte/med029>Problem 29</a>: Determine areas of overlapping rectangles when given coordinates as a string.</div>
+        <div class='list'><a href=/byte/med030>Problem 30</a>: Determine next number in a pattern based on prior determination.</div>
+        <div class='list'><a href=/byte/med031>Problem 31</a>: Return number of duplicate entries in an array of numbers.</div>
+        <div class='list'><a href=/byte/med032>Problem 32</a>: Encode a string of characters by transforming letters into numbers as required.</div>
+        <div class='list'><a href=/byte/med033>Problem 33</a>: Determine the maximum spread in a group of numbers representing stock prices.</div>
+    </div>
+    <div id='hard' class='hidden'>
+        <h2>Hard Difficulty</h2>
+        <div class='list'><a href=/byte/hard001>Problem 1</a>: Test whether a sudoku puzzle board is properly filled in.</div>
+        <div class='list'><a href=/byte/hard002>Problem 2</a>: Determine optimal of assignment of tasks to machines, based on array input.</div>
+        <div class='list'><a href=/byte/hard003>Problem 3</a>: Determine if relationship described in path between nodes is transitive.</div>
+        <div class='list'><a href=/byte/hard004>Problem 4</a>: Determine the shortest path between sequence of equidistant nodes.</div>
+        <div class='list'><a href=/byte/hard005>Problem 5</a>: Multiply out a polynomial expression in string format.</div>
+        <div class='list'><a href=/byte/hard006>Problem 6</a>: Take a math equation, evaluate, and return the result.  The minus sign really causes some pain!</div>
+        <div class='list'><a href=/byte/hard007>Problem 7</a>: Determine the longest repeating sequence in a stirng.  Probably should be in the intermediate level challenges.</div>
+        <div class='list'><a href=/byte/hard008>Problem 8</a>: Determine shortest path between non-equidistant nodes.</div>
+        <div class='list'><a href=/byte/hard009>Problem 9</a>: Create a reduced row echelon matrix from a given matrix.</div>
+        <div class='list'><a href=/byte/hard010>Problem 10</a>: Determine if two lines generated from given points intersect and, if so, return the point of intersection.</div>
+        <div class='list'><a href=/byte/hard011>Problem 11</a>: Determine the number of iterations of an algorithm to reach Kaprekars Constant</div>
+        <div class='list'><a href=/byte/hard012>Problem 12</a>: Determine if prescribed path among nodes is a "Hamiltonian" path, i.e., it covers all nodes without overlap.</div>
+        <div class='list'><a href=/byte/hard013>Problem 13</a>: Calculate the number of ways one can ascend n stairs, using one or two stair steps.</div>
+        <div class='list'><a href=/byte/hard014>Problem 14</a>: Determine if it is possible to travel a route with specified fuel stores at specified points.</div>
+        <div class='list'><a href=/byte/hard015>Problem 15</a>: Determine Whether a Matrix, Represented by String Input, Is Symmetric</div>
+        <div class='list'><a href=/byte/hard016>Problem 16</a>: Sort an array using a given swap mechanism.</div>
+        <div class='list'><a href=/byte/hard017>Problem 17</a>: Calculate the Determinant of a given matrix</div>
+        <div class='list'><a href=/byte/hard018>Problem 18</a>: Determine if a King is in check and, if so, how many options are available to it.</div>
+        <div class='list'><a href=/byte/hard019>Problem 19</a>: Determine the winning position on a Tic-Tac-Toe board.</div>
+        <div class='list'><a href=/byte/hard020>Problem 20</a>: Return the high card in a Blackjack hand and evaluate how the hand performed.</div>
+        <div class='list'><a href=/byte/hard021>Problem 21</a>: Decrypt a string encrypted with a crazy encryption scheme.</div>
+        <div class='list'><a href=/byte/hard022>Problem 22</a>: Determine if all edges of a graph are covered by given vertices.</div>
+        <div class='list'><a href=/byte/hard023>Problem 23</a>: Determine the Positions of a chessboard to which a knight can move.</div>
+        <div class='list'><a href=/byte/hard024>Problem 24</a>: Determine the longest path among a given group of nodes.</div>
+        <div class='list'><a href=/byte/hard025>Problem 25</a>: Determine the number of ways people can stand in a line while following given rules.</div>
+        <div class='list'><a href=/byte/hard026>Problem 26</a>: Calculate how many moves it will take a knight to get from one space on a chessboard to another.</div>
+        <div class='list'><a href=/byte/hard027>Problem 27</a>: Calculate the smallest number that, when squared, contains a certain number of digits.</div>
+        <div class='list'><a href=/byte/hard028>Problem 28</a>: Determine if a player in a connect four game has a winning move.</div>
+        <div class='list'><a href=/byte/hard029>Problem 29</a>: Determine if a round trip can be made through array elements.</div>
+        <div class='list'><a href=/byte/hard030>Problem 30</a>: Try to make a bounded area out of an array of ones and zeros.</div>
+        <div class='list'><a href=/byte/hard031>Problem 31</a>: Reduce the number of letters used to express a Roman numeral to a minimum.</div>
+        <div class='list'><a href=/byte/hard032>Problem 32</a>: Split the numbers in an array into two sets of equal cardinality and sum.</div>
+        <div class='list'><a href=/byte/hard033>Problem 33</a>: Locate the longest common subsequence of characters in two strings.</div>
+        <div class='list'><a href=/byte/hard034>Problem 34</a>: Determine which player will be the last to remove stones from one or more piles.</div>
+        <div class='list'><a href=/byte/hard035>Problem 35</a>: Calculate the next number in a row from Pascal's triangle.</div>
+        <div class='list'><a href=/byte/hard036>Problem 36</a>: Perform a calculation given by a string using Reverse Polish Notation.</div>
+        <div class='list'><a href=/byte/hard037>Problem 37</a>: Determine if nodes in a purported max heap array are in proper order.</div>
+        <div class='list'><a href=/byte/hard038>Problem 38</a>: Determine number of combinations of horizontal and vertical movements on a chessboard.</div>
+        <div class='list'><a href=/byte/hard039>Problem 39</a>: Calculate the number of ways to pair girls and boys from a group.</div>
+        <div class='list'><a href=/byte/hard040>Problem 40</a>: Calculate the number shy of the next Fibonacci number.</div>
+        <div class='list'><a href=/byte/hard041>Problem 41</a>: Evaluate a Boolean Expression to Determine what vlues would work.</div>
+        <div class='list'><a href=/byte/hard042>Problem 42</a>: Analyze an array of numbers to locate reversed pairs of numbers.</div>
+        <div class='list'><a href=/byte/hard043>Problem 43</a>: Count the number of valid ways of arranging a given number of () bracket pairs.</div>
+        <div class='list'><a href=/byte/hard044>Problem 44</a>: Count the number of anagram pairs contained in a given sentence.</div>
+        <div class='list'><a href=/byte/hard045>Problem 45</a>: Rotate an array of numbers around a given pivot.</div>
+    </div>
+    <div id='misc' class='hidden'>
+        <h2>Miscellaneous Problems</h2>
+        <div class='list'><a href=/byte/misc001>Problem 1</a>: Given an array representing the pins knocked down on each throw in a bowling game, compute the score.</div>
+        <div class='list'><a href=/byte/misc002>Problem 2</a>: Sort an array of random integers using the mergeSort algorithm.</div>
+    </div>
+</div>
+<%include partials/footer%>

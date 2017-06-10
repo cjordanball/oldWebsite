@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+}
+
+input {
+    box-sizing: border-box;
+}
+
+#insert {
+    width: 81vmin;
+    margin: auto;
+}
+
+.heading {
+    width: 80vmin;
+    margin: auto;
+    text-align: center;
+}
+.grid {
+    height: 8vmin;
+    width: 8vmin;
+    font-size: 7vmin;
+    text-align: center;
+    border: solid 1px;
+
+}
+
+span {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    border: 1px solid black;
+    margin-left: -4px;
+    margin-bottom: -4px;
+    padding: 0px;
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+}
+
+.bottom {
+    border-bottom: 2px solid black;
+}
+.top {
+    border-top: 2px solid black;
+}
+.left {
+    border-left: 2px solid black;
+}
+.right {
+    border-right: 2px solid black;
+}
+.rowline {
+    border-bottom: 3px solid pink;
+}
+.colline {
+    border-right: 3px solid pink;
+}
+.blue {
+    background-color: #B0C4DE;
+}
+.alarm {
+    background-color: red;
+}
